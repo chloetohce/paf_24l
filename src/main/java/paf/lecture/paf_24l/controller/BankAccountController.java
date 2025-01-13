@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import paf.lecture.paf_24l.model.BankAccount;
 import paf.lecture.paf_24l.service.BankAccountService;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -26,6 +28,12 @@ public class BankAccountController {
     public ResponseEntity<BankAccount> getAccount(@PathVariable String id) {
         BankAccount acct = service.getAccountById(Integer.parseInt(id));
         return ResponseEntity.ok().body(acct);
+    }
+    
+    @PostMapping("/transfer")
+    public ResponseEntity<Boolean> transferFunds(@RequestParam("from") Integer transfererId, @RequestParam("to") Integer transfereeId, @RequestParam String amt) {
+        boolean b = service.transfer(transfererId, transfereeId, Float.parseFloat(amt));
+        return ResponseEntity.ok().body(b);
     }
     
 }

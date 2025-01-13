@@ -22,7 +22,7 @@ public class BankAccountService {
     }
 
     @Transactional
-    public void transfer(int transfererId, int transfereeId, float amt) {
+    public boolean transfer(int transfererId, int transfereeId, float amt) {
         // Retrieve both accounts
         BankAccount transferer = repository.getAccountById(transfererId);
         BankAccount transferee = repository.getAccountById(transfereeId);
@@ -39,6 +39,8 @@ public class BankAccountService {
             transferee.setBalance(transferee.getBalance() + amt);
             repository.updateAccountById(transferee);
             repository.updateAccountById(transferer);
+            return true;
         }
+        return false;
     }
 }

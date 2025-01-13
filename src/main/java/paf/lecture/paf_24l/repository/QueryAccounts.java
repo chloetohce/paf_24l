@@ -1,6 +1,6 @@
 package paf.lecture.paf_24l.repository;
 
-public class Query {
+public class QueryAccounts {
     public static final String CREATE_ACCOUNT = """
             insert into accounts (name, isActive, balance)
                 values(?, ?, ?);

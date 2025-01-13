@@ -16,7 +16,7 @@ public class BankAccountRepository {
 
     public boolean isExistingAccount(int id) {
         try {
-            template.queryForObject(Query.SELECT_ACCOUNT,
+            template.queryForObject(QueryAccounts.SELECT_ACCOUNT,
                     BeanPropertyRowMapper.newInstance(BankAccount.class), id);
             return true;
         } catch (DataAccessException e) {
@@ -28,14 +28,14 @@ public class BankAccountRepository {
 
     public BankAccount getAccountById(int id) {
         try {
-            return template.queryForObject(Query.SELECT_ACCOUNT, BeanPropertyRowMapper.newInstance(BankAccount.class), id);
+            return template.queryForObject(QueryAccounts.SELECT_ACCOUNT, BeanPropertyRowMapper.newInstance(BankAccount.class), id);
         } catch (DataAccessException e) {
             throw new AccountNotFoundException("The account associated with id %s does not exist.".formatted(id));
         }
     }
 
     public boolean updateAccountById(BankAccount account) {
-        int accountUpdated = template.update(Query.UPDATE_ACCOUNT, account.getBalance(), account.getId());
+        int accountUpdated = template.update(QueryAccounts.UPDATE_ACCOUNT, account.getBalance(), account.getId());
         return accountUpdated > 0;
     }
 }

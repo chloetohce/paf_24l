@@ -15,7 +15,10 @@ public class ReservationService {
 
     @Transactional
     public boolean createReservationRecord(Reservation reservation, ReservationDetails details) {
-        repository.createReservation(reservation);
+        int rid = repository.createReservation(reservation);
+
+        // Reservation details originally does not contain the id. Need to set manually.
+        details.setId(rid);
         repository.createReservationDetails(details);
         return true;
     }

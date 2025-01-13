@@ -2,6 +2,7 @@ package paf.lecture.paf_24l.repository;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,7 +26,7 @@ public class ReservationRepository {
     public int createReservation(Reservation r) {
         KeyHolder key = new GeneratedKeyHolder();
         template.update(con -> {
-            PreparedStatement ps = con.prepareStatement(QueryReservations.INSERT_RESERVATION);
+            PreparedStatement ps = con.prepareStatement(QueryReservations.INSERT_RESERVATION, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, r.getName());
             ps.setDate(2, new Date(r.getReservationDate().getTime()));
             return ps;

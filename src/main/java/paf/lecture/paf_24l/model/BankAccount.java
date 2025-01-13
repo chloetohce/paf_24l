@@ -1,5 +1,8 @@
 package paf.lecture.paf_24l.model;
 
+import paf.lecture.paf_24l.exception.AccountInactiveException;
+import paf.lecture.paf_24l.exception.InsufficientBalanceException;
+
 public class BankAccount {
     private int id;
 
@@ -8,6 +11,20 @@ public class BankAccount {
     private boolean isActive;
     
     private float balance;
+
+    public boolean isAccountActive() {
+        if (this.isActive) {
+            return true;
+        }
+        throw new AccountInactiveException("Account with account ID %d is inactive.".formatted(id));
+    }
+
+    public boolean hasSufficientBalance(float amt) {
+        if (balance >= amt) {
+            return true;
+        }
+        throw new InsufficientBalanceException("Account %d does not have sufficient funds to make the transfer.".formatted(id));
+    }
 
     public int getId() {
         return id;

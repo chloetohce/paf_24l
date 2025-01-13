@@ -36,10 +36,6 @@ public class BankAccountRepository {
 
     public boolean updateAccountById(BankAccount account) {
         int accountUpdated = template.update(Query.UPDATE_ACCOUNT, account.getBalance(), account.getId());
-        if (accountUpdated > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return accountUpdated > 0;
     }
 }
